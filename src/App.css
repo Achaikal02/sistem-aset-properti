@@ -1,0 +1,532 @@
+/* ==========================================================
+   GLOBAL RESET
+========================================================== */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: 'Inter', -apple-system, system-ui, sans-serif;
+  color-scheme: light;
+  transition: background-color .25s, color .25s;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+/* ==========================================================
+   THEME VARIABLES (LIGHT BLUE THEME)
+========================================================== */
+:root {
+  --bg: #eaf3ff;               /* Biru muda sangat soft */
+  --text: #0c1a33;             /* Biru gelap elegan */
+
+  --card-bg: #ffffff;
+  --card-border: rgba(0,0,0,0.06);
+
+  --btn-main: #3b82f6;         /* Biru cerah */
+  --btn-main-hover: #2563eb;   /* Biru lebih gelap */
+
+  --btn-danger: #f87171;
+  --btn-danger-hover: #ef4444;
+
+  --soft-bg: #f5f9ff;          /* Putih kebiruan */
+  --soft-border: #d0d9e8;
+
+  --modal-bg: #ffffffcc;
+  --shadow: 0 8px 24px rgba(0,0,0,0.08);
+  --blur: blur(4px);
+}
+
+/* Dark Mode Auto (Tetap mendukung — tapi dibikin lebih lembut) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f172a;
+    --text: #e2e8f0;
+
+    --card-bg: #1e293b;
+    --card-border: rgba(255,255,255,0.08);
+
+    --btn-main: #60a5fa;
+    --btn-main-hover: #3b82f6;
+
+    --btn-danger: #ef4444;
+    --btn-danger-hover: #dc2626;
+
+    --soft-bg: #1e293b;
+    --soft-border: #334155;
+
+    --modal-bg: #1e293bcc;
+    --shadow: 0 10px 30px rgba(0,0,0,0.5);
+    --blur: blur(6px);
+  }
+}
+
+/* ==========================================================
+   LAYOUT
+========================================================== */
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 28px 20px 0 20px;
+  text-align: center;
+}
+
+.content-centered {
+  max-width: 1200px;
+  margin: 28px auto;
+  padding: 0 20px 28px 20px;
+}
+
+.content-fullwidth {
+  width: 100%;
+  padding: 0;
+  margin: 16px 0 0 0;
+  height: calc(100vh - 150px);
+}
+
+.header-title {
+  margin-bottom: 20px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--text);
+}
+
+/* ==========================================================
+   CARD
+========================================================== */
+.card {
+  background: var(--card-bg);
+  border-radius: 14px;
+  padding: 24px;
+  margin-bottom: 24px;
+  border: 1px solid var(--card-border);
+  box-shadow: var(--shadow);
+}
+
+.card:hover {
+  box-shadow: 0 12px 26px rgba(80,120,200,0.15);
+}
+
+/* ==========================================================
+   BUTTONS
+========================================================== */
+.btn {
+  background: linear-gradient(145deg, var(--btn-main), var(--btn-main-hover));
+  color: white;
+  padding: 11px 20px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform .15s, opacity .2s, box-shadow .2s;
+  box-shadow: 0 3px 10px rgba(37, 99, 235, 0.25);
+}
+
+.btn:hover {
+  opacity: 0.95;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(37, 99, 235, 0.32);
+}
+
+.btn-danger,
+.btn-close {
+  background: linear-gradient(145deg, var(--btn-danger), var(--btn-danger-hover));
+  box-shadow: 0 3px 10px rgba(240, 80, 80, 0.25);
+}
+
+.btn-danger:hover,
+.btn-close:hover {
+  opacity: 0.95;
+  transform: translateY(-2px);
+}
+
+/* ==========================================================
+   UPLOAD
+========================================================== */
+.upload-box {
+  border: 2px dashed var(--soft-border);
+  border-radius: 14px;
+  padding: 40px;
+  text-align: center;
+  background: var(--soft-bg);
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.upload-box:hover {
+  border-color: var(--btn-main);
+  background: #e1eeff;
+  box-shadow: 0 4px 14px rgba(80,120,200,0.18);
+}
+
+/* ==========================================================
+   TABLE
+========================================================== */
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: 14px;
+  border: 1px solid var(--soft-border);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card-bg);
+}
+
+th, td {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--soft-border);
+}
+
+th {
+  background: #eaf3ff;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  color: #1e3a8a;
+}
+
+/* ==========================================================
+   MODAL
+========================================================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: var(--blur);
+  z-index: 9999;
+}
+
+.modal-content {
+  background: var(--modal-bg);
+  padding: 32px;
+  border-radius: 18px;
+  width: 90%;
+  max-width: 900px;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow);
+  backdrop-filter: var(--blur);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--soft-border);
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.detail-card {
+  background: var(--soft-bg);
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid var(--soft-border);
+}
+
+/* ==========================================================
+   LEAFLET MAP
+========================================================== */
+.leaflet-container {
+  height: 100% !important;
+  width: 100% !important;
+  background: var(--soft-bg);
+}
+
+.map-container-fixed {
+  height: 85vh;
+  width: 100%;
+  position: relative;
+  border-top: 1px solid var(--soft-border);
+}
+
+.map-floating-header {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: var(--modal-bg);
+  padding: 16px 22px;
+  border-radius: 14px;
+  backdrop-filter: var(--blur);
+  box-shadow: var(--shadow);
+  min-width: 260px;
+  border: 1px solid rgba(255,255,255,0.4);
+}
+/* ==========================================================
+   GLOBAL RESET
+========================================================== */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: 'Inter', -apple-system, system-ui, sans-serif;
+  color-scheme: light;
+  transition: background-color .25s, color .25s;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+/* ==========================================================
+   THEME VARIABLES (LIGHT BLUE THEME)
+========================================================== */
+:root {
+  --bg: #eaf3ff;               /* Biru muda sangat soft */
+  --text: #0c1a33;             /* Biru gelap elegan */
+
+  --card-bg: #ffffff;
+  --card-border: rgba(0,0,0,0.06);
+
+  --btn-main: #3b82f6;         /* Biru cerah */
+  --btn-main-hover: #2563eb;   /* Biru lebih gelap */
+
+  --btn-danger: #f87171;
+  --btn-danger-hover: #ef4444;
+
+  --soft-bg: #f5f9ff;          /* Putih kebiruan */
+  --soft-border: #d0d9e8;
+
+  --modal-bg: #ffffffcc;
+  --shadow: 0 8px 24px rgba(0,0,0,0.08);
+  --blur: blur(4px);
+}
+
+/* Dark Mode Auto (Tetap mendukung — tapi dibikin lebih lembut) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f172a;
+    --text: #e2e8f0;
+
+    --card-bg: #1e293b;
+    --card-border: rgba(255,255,255,0.08);
+
+    --btn-main: #60a5fa;
+    --btn-main-hover: #3b82f6;
+
+    --btn-danger: #ef4444;
+    --btn-danger-hover: #dc2626;
+
+    --soft-bg: #1e293b;
+    --soft-border: #334155;
+
+    --modal-bg: #1e293bcc;
+    --shadow: 0 10px 30px rgba(0,0,0,0.5);
+    --blur: blur(6px);
+  }
+}
+
+/* ==========================================================
+   LAYOUT
+========================================================== */
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 28px 20px 0 20px;
+  text-align: center;
+}
+
+.content-centered {
+  max-width: 1200px;
+  margin: 28px auto;
+  padding: 0 20px 28px 20px;
+}
+
+.content-fullwidth {
+  width: 100%;
+  padding: 0;
+  margin: 16px 0 0 0;
+  height: calc(100vh - 150px);
+}
+
+.header-title {
+  margin-bottom: 20px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--text);
+}
+
+/* ==========================================================
+   CARD
+========================================================== */
+.card {
+  background: var(--card-bg);
+  border-radius: 14px;
+  padding: 24px;
+  margin-bottom: 24px;
+  border: 1px solid var(--card-border);
+  box-shadow: var(--shadow);
+}
+
+.card:hover {
+  box-shadow: 0 12px 26px rgba(80,120,200,0.15);
+}
+
+/* ==========================================================
+   BUTTONS
+========================================================== */
+.btn {
+  background: linear-gradient(145deg, var(--btn-main), var(--btn-main-hover));
+  color: white;
+  padding: 11px 20px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform .15s, opacity .2s, box-shadow .2s;
+  box-shadow: 0 3px 10px rgba(37, 99, 235, 0.25);
+}
+
+.btn:hover {
+  opacity: 0.95;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(37, 99, 235, 0.32);
+}
+
+.btn-danger,
+.btn-close {
+  background: linear-gradient(145deg, var(--btn-danger), var(--btn-danger-hover));
+  box-shadow: 0 3px 10px rgba(240, 80, 80, 0.25);
+}
+
+.btn-danger:hover,
+.btn-close:hover {
+  opacity: 0.95;
+  transform: translateY(-2px);
+}
+
+/* ==========================================================
+   UPLOAD
+========================================================== */
+.upload-box {
+  border: 2px dashed var(--soft-border);
+  border-radius: 14px;
+  padding: 40px;
+  text-align: center;
+  background: var(--soft-bg);
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.upload-box:hover {
+  border-color: var(--btn-main);
+  background: #e1eeff;
+  box-shadow: 0 4px 14px rgba(80,120,200,0.18);
+}
+
+/* ==========================================================
+   TABLE
+========================================================== */
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: 14px;
+  border: 1px solid var(--soft-border);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card-bg);
+}
+
+th, td {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--soft-border);
+}
+
+th {
+  background: #eaf3ff;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  color: #1e3a8a;
+}
+
+/* ==========================================================
+   MODAL
+========================================================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: var(--blur);
+  z-index: 9999;
+}
+
+.modal-content {
+  background: var(--modal-bg);
+  padding: 32px;
+  border-radius: 18px;
+  width: 90%;
+  max-width: 900px;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow);
+  backdrop-filter: var(--blur);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--soft-border);
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.detail-card {
+  background: var(--soft-bg);
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid var(--soft-border);
+}
+
+/* ==========================================================
+   LEAFLET MAP
+========================================================== */
+.leaflet-container {
+  height: 100% !important;
+  width: 100% !important;
+  background: var(--soft-bg);
+}
+
+.map-container-fixed {
+  height: 85vh;
+  width: 100%;
+  position: relative;
+  border-top: 1px solid var(--soft-border);
+}
+
+.map-floating-header {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: var(--modal-bg);
+  padding: 16px 22px;
+  border-radius: 14px;
+  backdrop-filter: var(--blur);
+  box-shadow: var(--shadow);
+  min-width: 260px;
+  border: 1px solid rgba(255,255,255,0.4);
+}
