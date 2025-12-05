@@ -1,4 +1,7 @@
+// src/lib/pocketbase.js
 import PocketBase from 'pocketbase';
 
-// Ganti URL di bawah dengan URL Ngrok yang baru kamu dapat
-export const pb = new PocketBase('https://adorsed-unaphasic-roberto.ngrok-free.dev');
+export const pb = new PocketBase('http://127.0.0.1:8090');
+
+// TAMBAHKAN BARIS INI:
+pb.autoCancellation(false);
