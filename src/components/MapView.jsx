@@ -273,17 +273,6 @@ const MapView = () => {
                         {pb.authStore.model?.role === 'admin' && (
                             <div className="modal-actions" style={{background:'white'}}>
                                 <button 
-                                    onClick={() => {
-                                        setEditingItem(selectedItem); 
-                                        setSelectedItem(null);        
-                                    }}
-                                    className="btn btn-warning"
-                                    style={{display:'flex', alignItems:'center', gap:'5px'}}
-                                >
-                                    ✏️ Edit Data
-                                </button>
-                                
-                                <button 
                                     onClick={() => handleDelete(selectedItem.id)}
                                     className="btn btn-danger"
                                     style={{display:'flex', alignItems:'center', gap:'5px'}}
